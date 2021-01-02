@@ -8,7 +8,7 @@ collection of some JXA (JavaScript for Automation) scripts I wrote.
 ## Installation
 
 ```sh
-autoreconf --install
+autoreconf -fi
 ./configure
 make && make install
 ```
