@@ -4,7 +4,10 @@ set -e
 
 echo '#!/bin/bash';
 
-SRC_FOLDERS=$(find src -type d -d 1)
+# Obtain path where ./create-cli.sh is located.
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+SRC_FOLDERS=$(find "$DIR/src" -type d -d 1)
 
 for FOLDER_PATH in $SRC_FOLDERS; do
     cd "$FOLDER_PATH";

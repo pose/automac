@@ -1,4 +1,4 @@
-% osacli(1) Version 0.0.01 | osacli Documentation
+% osacli(1) Version 0.1 | osacli Documentation
 
 # NAME
 
