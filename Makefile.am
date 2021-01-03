@@ -8,6 +8,9 @@ CLEANFILES = $(dist_bin_SCRIPTS)
 if FOUND_PANDOC
 osacli.1: docs/osacli.1.md
 	pandoc --standalone --to man $(srcdir)/docs/osacli.1.md -o $@
+else
+osacli.1:
+	cp $(srcdir)/docs/osacli.1 $@
 endif
 
 osacli:
