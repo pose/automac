@@ -5,6 +5,9 @@ dist_man_MANS = osacli.1
 
 CLEANFILES = $(dist_bin_SCRIPTS)
 
+rwildcard = $(foreach d, $(wildcard $1*), $(call rwildcard, $d/, $2) $(filter $2, $d))
+JS_FILES = $(call rwildcard,$(srcdir)/src,%.js)
+
 if FOUND_PANDOC
 osacli.1: docs/osacli.1.md
 	pandoc --standalone --to man $(srcdir)/docs/osacli.1.md -o $@
@@ -13,6 +16,6 @@ osacli.1:
 	cp $(srcdir)/docs/osacli.1 $@
 endif
 
-osacli:
+osacli: $(JS_FILES)
 	$(srcdir)/create-cli.sh > $@
 	chmod u+x $@
