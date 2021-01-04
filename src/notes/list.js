@@ -1,22 +1,27 @@
-ObjC.import('Foundation');
+ObjC.import("Foundation");
 
-console.log = function() {
-    for (argument of arguments) {
-        $.NSFileHandle.fileHandleWithStandardOutput.writeData($.NSString.alloc.initWithString(String(argument) + "\n").dataUsingEncoding($.NSUTF8StringEncoding));
-    }
-}
+console.log = function () {
+  for (argument of arguments) {
+    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
+      $.NSString.alloc
+        .initWithString(String(argument) + "\n")
+        .dataUsingEncoding($.NSUTF8StringEncoding)
+    );
+  }
+};
 
 console.error = function () {
-    for (argument of arguments) {
-        $.NSFileHandle.fileHandleWithStandardError.writeData($.NSString.alloc.initWithString(String(argument) + "\n").dataUsingEncoding($.NSUTF8StringEncoding));
-    }
-
-}
-
+  for (argument of arguments) {
+    $.NSFileHandle.fileHandleWithStandardError.writeData(
+      $.NSString.alloc
+        .initWithString(String(argument) + "\n")
+        .dataUsingEncoding($.NSUTF8StringEncoding)
+    );
+  }
+};
 
 function run(argv) {
-
-  const notes = Application('Notes');
+  const notes = Application("Notes");
 
   const asArray = (pseudoArray, mappingFunction) => {
     const result = [];
@@ -31,33 +36,32 @@ function run(argv) {
     }
 
     return result;
-
   };
 
-  const keyMapper = allowlist => el => {
+  const keyMapper = (allowlist) => (el) => {
     return allowlist.reduce((acc, allowlistedItem) => {
       acc[allowlistedItem] = el[allowlistedItem]();
       return acc;
     }, {});
   };
 
-  const folders = asArray(notes.folders, f => ({
+  const folders = asArray(notes.folders, (f) => ({
     ...f,
     id: f.id(),
     name: f.name(),
-    notes: asArray(f.notes, keyMapper(['name', 'id'])).map(n => ({
+    notes: asArray(f.notes, keyMapper(["name", "id"])).map((n) => ({
       ...n,
       "container.id": f.id(),
-      "container.name": f.name()
-    }))
+      "container.name": f.name(),
+    })),
   }));
 
-  folders.forEach(f => {
+  folders.forEach((f) => {
     if (f.name === "Recently Deleted") {
       return;
     }
 
-    f.notes.forEach( n => {
+    f.notes.forEach((n) => {
       console.log(JSON.stringify(n));
     });
   });
