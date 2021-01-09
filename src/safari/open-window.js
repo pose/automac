@@ -23,7 +23,13 @@ console.error = function () {
 function run(argv) {
   const safari = Application("Safari");
 
-  safari.Document({url: 'https://example.com'}).make();
+  const options = {};
+
+  if (argv[0]) {
+    options.url = argv[0];
+  }
+
+  safari.Document(options).make();
 
   // TODO Validate the assumption that the first window will always be the
   // newly created.
