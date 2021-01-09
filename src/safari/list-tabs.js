@@ -48,7 +48,7 @@ function run(argv) {
   const windows = asArray(safari.windows, (w) => ({
     ...w,
     id: w.id(),
-    tabs: asArray(w.tabs, keyMapper(["name", "url"])),
+    tabs: asArray(w.tabs, keyMapper(["name", "url", "index"])),
   }));
 
   windows.forEach((w, index) => {

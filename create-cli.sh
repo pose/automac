@@ -36,3 +36,4 @@ done
 echo "echo 'OSA script automation. Usage:'"
 echo "echo"
 echo 'echo "    '\$'0 <command> <subcommand>"'
+echo 'exit 1'
