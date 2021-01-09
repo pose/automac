@@ -1,20 +1,25 @@
 #!/bin/bash
 
-set -e
-
 function extractWindowAndIndex {
-    echo "$1" | jq '(.windowId|tostring) + "-" + (.index|tostring)'
+    jq -r '(.windowId|tostring) + "-" + (.index|tostring)'
 }
 
-result=$($osacli safari open-tab)
-newTabId=$(extractWindowAndIndex "$result")
+function testTabs {
+    newTabId=$($osacli safari open-tab | extractWindowAndIndex)
+    listedTabIds=$($osacli safari list-tabs | extractWindowAndIndex)
+    assertContains "New tab should be among listed tabs"\
+        "$listedTabIds"\
+        "$newTabId"
+}
 
-IFS=$'\n'
-for tab in $($osacli safari list-tabs); do
-    currentTabId=$(extractWindowAndIndex "$tab")
-    if [[ "$newTabId" == "$currentTabId" ]]; then
-        exit 0;
-    fi
-done
+function testWindows {
+    newWindowId=$($osacli safari open-window | jq -r .windowId)
+    listedWindowIds=$($osacli safari list-windows | jq -r .windowId)
+    assertContains "New window should be among listed windows"\
+        "$listedWindowIds"\
+        "$newWindowId"
+}
 
-exit 99
+
+. $(which shunit2)
+
