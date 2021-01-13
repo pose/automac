@@ -19,22 +19,19 @@ function testTabs {
 }
 
 function testWindows {
-    newWindowId=$($osacli safari open-window | jq -r .windowId)
-    listedWindowIds=$($osacli safari list-windows | jq -r .windowId)
+    newWindowId=$($osacli safari open-window | jq -r .id)
+    listedWindowIds=$($osacli safari list-windows | jq -r .id)
     assertContains "New window should be among listed windows"\
         "$listedWindowIds"\
         "$newWindowId"
 
-    // TODO
-    startSkipping
-
     $osacli safari close-window $newWindowId
-    listedWindowIds=$($osacli safari list-windows | jq -r .windowId)
+    listedWindowIds=$($osacli safari list-windows | jq -r .id)
+    echo $listedWindowIds
+    echo $newWindowId
     assertNotContains "New window should not be among listed windows after closing"\
         "$listedWindowIds"\
         "$newWindowId"
-
-    endSkipping
 }
 
 . $(which shunit2)
