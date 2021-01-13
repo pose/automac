@@ -49,5 +49,8 @@ function run(argv) {
   }
 
   const res = safari.windows[0].tabs.push(new safari.Tab(options));
-  console.log(JSON.stringify({...serialize(safari.windows[0].tabs[res - 1]), windowId: safari.windows[0].id()}));
+  console.log(JSON.stringify({
+    ...serialize(safari.windows[0].tabs[res - 1]),
+    windowId: safari.windows[0].id()
+  }));
 }
