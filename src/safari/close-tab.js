@@ -35,7 +35,7 @@ function run(argv) {
 
   safari.windows().filter((w) => {
     if (String(w.id()) === windowId) {
-      console.log(JSON.stringify(w.tabs.whose({ index: tabIndex })[0].close()));
+      w.tabs.whose({ index: tabIndex })[0].close();
       $.exit(0);
     }
   });

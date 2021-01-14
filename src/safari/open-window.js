@@ -1,4 +1,5 @@
 ObjC.import("Foundation");
+ObjC.import("stdlib");
 
 console.log = function () {
   for (argument of arguments) {
@@ -25,6 +26,11 @@ function run(argv) {
 
   const options = {};
 
+  if (argv.length !== 0 && argv.length !== 1) {
+    $.exit(1);
+    return;
+  }
+
   if (argv[0]) {
     options.url = argv[0];
   }
@@ -34,5 +40,5 @@ function run(argv) {
   // TODO Validate the assumption that the first window will always be the
   // newly created.
   console.log(JSON.stringify({id: safari.windows[0].id()}));
-
+  $.exit(0);
 }
