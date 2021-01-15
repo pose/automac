@@ -28,6 +28,7 @@ function run(argv) {
     // TODO Print usage
     console.error("Invalid number of arguments");
     $.exit(1);
+    return;
   }
 
   const windowId = argv[0];

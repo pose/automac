@@ -8,9 +8,19 @@ function extractWindowAndIndex {
     jq -r '(.windowId|tostring) + " " + (.index|tostring)'
 }
 
-# function testSafariCloseTabArguments {
-#     fail
-# }
+function testSafariCloseTabArguments {
+    # Should not support passing no-arguments
+    $osacli safari close-tab
+    assertEquals 1 $?
+
+    # Should not support passing one argument
+    $osacli safari close-tab foo
+    assertEquals 1 $?
+
+    # Should not support passing three arguments
+    $osacli safari close-tab foo bar baz
+    assertEquals 1 $?
+}
 # function testSafariNewTabArguments {
 #     fail
 # }
