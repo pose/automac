@@ -21,9 +21,16 @@ function testSafariCloseTabArguments {
     $osacli safari close-tab foo bar baz
     assertEquals 1 $?
 }
-# function testSafariNewTabArguments {
-#     fail
-# }
+function testSafariNewTabArguments {
+    # Should support passing an url as first argument
+    tab=$($osacli safari open-tab "https://example.com/")
+    assertEquals "https://example.com/" "$(echo $tab | jq -r .url)"
+    $osacli safari close-tab "$(echo $tab | jq -r .windowId)" "$(echo $tab | jq -r .index)"
+
+    # Should not support passing two or more arguments
+    $osacli safari open-tab "https://example.com/" foo
+    assertEquals 1 $?
+}
 # function testSafariCloseWindowArguments {
 #     fail
 # }
@@ -55,7 +62,7 @@ function testTabs {
     newTabId=$($osacli safari open-tab | extractWindowAndIndex)
     listedTabIds=$($osacli safari list-tabs | extractWindowAndIndex)
     assertContains "New tab should be among listed tabs"\
-        "$listedTabIds"\
+         "$listedTabIds"\
         "$newTabId"
 
     $osacli safari close-tab $newTabId
