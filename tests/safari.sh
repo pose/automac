@@ -9,6 +9,7 @@ function extractWindowAndIndex {
 }
 
 function testSafariCloseTabArguments {
+    # Error code 1
     # Should not support passing no-arguments
     $osacli safari close-tab
     assertEquals 1 $?
@@ -20,6 +21,11 @@ function testSafariCloseTabArguments {
     # Should not support passing three arguments
     $osacli safari close-tab foo bar baz
     assertEquals 1 $?
+
+    # Error code 2
+    # Should fail if the window/tab combination doesn't exist
+    $osacli safari close-tab foo bar
+    assertEquals 2 $?
 }
 function testSafariNewTabArguments {
     # Should support passing an url as first argument
@@ -31,9 +37,22 @@ function testSafariNewTabArguments {
     $osacli safari open-tab "https://example.com/" foo
     assertEquals 1 $?
 }
-# function testSafariCloseWindowArguments {
-#     fail
-# }
+function testSafariCloseWindowArguments {
+    # Error code 1
+    # Should not support passing no-arguments
+    $osacli safari close-window
+    assertEquals 1 $?
+
+    # Should not support passing two or more arguments
+    $osacli safari close-window foo bar baz
+    assertEquals 1 $?
+
+    # Error code 2
+    # Should fail with error code 2 if the window/tab combination doesn't
+    # exist
+    $osacli safari close-tab foo bar
+    assertEquals 2 $?
+}
 function testSafariNewWindowArguments {
     # Should support passing an url as first argument
     windowId=$($osacli safari open-window "about:blank"|jq -r .id)

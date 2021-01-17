@@ -26,7 +26,6 @@ function run(argv) {
 
   if (argv.length !== 1) {
     // TODO Print usage
-    console.error("Invalid number of arguments");
     $.exit(1);
   }
 
