@@ -8,7 +8,7 @@ CLEANFILES = $(dist_bin_SCRIPTS)
 rwildcard = $(foreach d, $(wildcard $1*), $(call rwildcard, $d/, $2) $(filter $2, $d))
 JS_FILES = $(call rwildcard,$(srcdir)/src,%.js)
 
-TESTS = tests/safari.sh
+TESTS = tests/safari.sh tests/notes.sh
 TESTS_ENVIRONMENT = \
   osacli=$(abs_top_builddir)/osacli;\
   export osacli;

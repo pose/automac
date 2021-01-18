@@ -2,8 +2,6 @@
 
 osacli=${osacli:-./osacli}
 
-# TODO Add argument validation tests
-
 function extractWindowAndIndex {
     jq -r '(.windowId|tostring) + " " + (.index|tostring)'
 }
