@@ -29,14 +29,12 @@ function run(argv) {
   // notes.strictCommandScope = true
   notes.strictParameterType = true;
 
-  // TODO validate
-  const noteId = argv[0];
-
   if (argv.length !== 1) {
     $.exit(1);
     return;
   }
 
+  const noteId = argv[0];
   const foundNote = notes.notes.byId(noteId);
 
   if (foundNote.exists() === false) {
