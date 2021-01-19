@@ -55,7 +55,20 @@ function run(argv) {
     options.url = argv[0];
   }
 
-  const res = safari.windows[0].tabs.push(new safari.Tab(options));
+  let res;
+  try {
+    res = safari.windows[0].tabs.push(new safari.Tab(options));
+  }
+  catch (err) {
+    // Permissions issue
+    if (err.errorNumber === -1743) {
+      $.exit(3);
+    } else {
+      console.error(`Unknown error: ${err} [${err.errorNumber}]`);
+      $.exit(50);
+    }
+    return;
+  }
   console.log(JSON.stringify({
     ...serialize(safari.windows[0].tabs[res - 1]),
     windowId: safari.windows[0].id()

@@ -2,6 +2,17 @@
 
 osacli=${osacli:-./osacli}
 
+# TODO How to bail if this test fails
+function testPermissions {
+    $osacli safari list-tabs
+    assertNotEquals "Required permissions have not been granted" 3 $?
+}
+
+# TODO Decision: Do we have some sort of unified logic for the permissions
+# checks or do we let each script handle it independently?
+# TODO list-tabs permissions
+# TODO list-tabs arguments test
+
 function extractWindowAndIndex {
     jq -r '(.windowId|tostring) + " " + (.index|tostring)'
 }
