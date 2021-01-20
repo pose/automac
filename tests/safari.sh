@@ -11,7 +11,6 @@ function testPermissions {
 # TODO Decision: Do we have some sort of unified logic for the permissions
 # checks or do we let each script handle it independently?
 # TODO list-tabs permissions
-# TODO list-tabs arguments test
 
 function testListTabsArguments {
     # Should support not arguments
