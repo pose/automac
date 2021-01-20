@@ -63,3 +63,12 @@ In theory, scripts could be imported using the `Library` function as described
 * [ ] Add sample project about having a document with links and converting them
   to websites and adding them to new notes to be read later. So a reading list
   can be converted to different notes containing the actual articles!
+* [ ] Sample about querying reports of screen time.
+* [ ] Sample about getting email from mutt and adding it to notes.
+* [ ] Idea for sample: Make notes a FUSE volume.
+* [ ] Idea for sample: Achieve tiling of windows using the scripts.
+* [ ] When installing, make sure to make the test targets optional if `jq` and
+  `shunit2` are not present.
+* [ ] Research how to install/add to brew/brew cask.
+* [ ] Support different output formats like `aws cli`.
+* [ ] Record gif video for the README.md
