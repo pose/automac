@@ -4,7 +4,7 @@ osacli=${osacli:-./osacli}
 
 # TODO How to bail if this test fails
 function testPermissions {
-    $osacli safari list-tabs
+    $osacli safari list-tabs > /dev/null
     assertNotEquals "Required permissions have not been granted" 3 $?
 }
 
@@ -13,11 +13,21 @@ function testPermissions {
 # TODO list-tabs permissions
 # TODO list-tabs arguments test
 
+function testListTabsArguments {
+    # Should support not arguments
+    $osacli safari list-tabs > /dev/null
+    assertEquals 0 $?
+
+    # Should fail otherwise
+    $osacli safari list-tabs foo
+    assertEquals 1 $?
+}
+
 function extractWindowAndIndex {
     jq -r '(.windowId|tostring) + " " + (.index|tostring)'
 }
 
-function testSafariCloseTabArguments {
+function testCloseTabArguments {
     # Error code 1
     # Should not support passing no-arguments
     $osacli safari close-tab
@@ -36,7 +46,7 @@ function testSafariCloseTabArguments {
     $osacli safari close-tab foo bar
     assertEquals 2 $?
 }
-function testSafariNewTabArguments {
+function testNewTabArguments {
     # Should support passing an url as first argument
     tab=$($osacli safari open-tab "https://example.com/")
     assertEquals "https://example.com/" "$(echo $tab | jq -r .url)"
@@ -46,7 +56,7 @@ function testSafariNewTabArguments {
     $osacli safari open-tab "https://example.com/" foo
     assertEquals 1 $?
 }
-function testSafariCloseWindowArguments {
+function testCloseWindowArguments {
     # Error code 1
     # Should not support passing no-arguments
     $osacli safari close-window
@@ -62,7 +72,7 @@ function testSafariCloseWindowArguments {
     $osacli safari close-tab foo bar
     assertEquals 2 $?
 }
-function testSafariNewWindowArguments {
+function testNewWindowArguments {
     # Should support passing an url as first argument
     windowId=$($osacli safari open-window "about:blank"|jq -r .id)
     tabs=$($osacli safari list-tabs-by-window-id $windowId)

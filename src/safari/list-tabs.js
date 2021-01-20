@@ -21,30 +21,35 @@ console.error = function () {
   }
 };
 
+const asArray = (pseudoArray, mappingFunction) => {
+  const result = [];
+
+  for (let i = 0; i < pseudoArray.length; i++) {
+    let element = pseudoArray[i];
+
+    if (mappingFunction) {
+      element = mappingFunction(element);
+    }
+    result.push(element);
+  }
+
+  return result;
+};
+
+const keyMapper = (allowlist) => (el) => {
+  return allowlist.reduce((acc, allowlistedItem) => {
+    acc[allowlistedItem] = el[allowlistedItem]();
+    return acc;
+  }, {});
+};
+
 function run(argv) {
   const safari = Application("Safari");
 
-  const asArray = (pseudoArray, mappingFunction) => {
-    const result = [];
-
-    for (let i = 0; i < pseudoArray.length; i++) {
-      let element = pseudoArray[i];
-
-      if (mappingFunction) {
-        element = mappingFunction(element);
-      }
-      result.push(element);
-    }
-
-    return result;
-  };
-
-  const keyMapper = (allowlist) => (el) => {
-    return allowlist.reduce((acc, allowlistedItem) => {
-      acc[allowlistedItem] = el[allowlistedItem]();
-      return acc;
-    }, {});
-  };
+  if (argv.length !== 0) {
+    $.exit(1);
+    return;
+  }
 
   // TODO Refactor this into a different function so the try/catch is
   // cleaner
@@ -69,6 +74,5 @@ function run(argv) {
       console.error(`Unknown error: ${err} [${err.errorNumber}]`);
       $.exit(50);
     }
-    return;
   }
 }
