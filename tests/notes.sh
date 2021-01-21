@@ -8,6 +8,12 @@ osacli=${osacli:-./osacli}
 # TODO test when permissions are not granted
 # etc.
 
+function testListArguments {
+    # Should fail with one or more arguments
+    $osacli notes list foo
+    assertEquals 1 $?
+}
+
 function testCreateArguments {
     # Should fail with less than one argument
     $osacli notes create

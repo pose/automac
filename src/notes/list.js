@@ -1,4 +1,5 @@
 ObjC.import("Foundation");
+ObjC.import("stdlib");
 
 console.log = function () {
   for (argument of arguments) {
@@ -20,30 +21,35 @@ console.error = function () {
   }
 };
 
+const asArray = (pseudoArray, mappingFunction) => {
+  const result = [];
+
+  for (let i = 0; i < pseudoArray.length; i++) {
+    let element = pseudoArray[i];
+
+    if (mappingFunction) {
+      element = mappingFunction(element);
+    }
+    result.push(element);
+  }
+
+  return result;
+};
+
+const keyMapper = (allowlist) => (el) => {
+  return allowlist.reduce((acc, allowlistedItem) => {
+    acc[allowlistedItem] = el[allowlistedItem]();
+    return acc;
+  }, {});
+};
+
 function run(argv) {
   const notes = Application("Notes");
 
-  const asArray = (pseudoArray, mappingFunction) => {
-    const result = [];
-
-    for (let i = 0; i < pseudoArray.length; i++) {
-      let element = pseudoArray[i];
-
-      if (mappingFunction) {
-        element = mappingFunction(element);
-      }
-      result.push(element);
-    }
-
-    return result;
-  };
-
-  const keyMapper = (allowlist) => (el) => {
-    return allowlist.reduce((acc, allowlistedItem) => {
-      acc[allowlistedItem] = el[allowlistedItem]();
-      return acc;
-    }, {});
-  };
+  if (argv.length !== 0) {
+    $.exit(1);
+    return;
+  }
 
   const folders = asArray(notes.folders, (f) => ({
     ...f,
@@ -65,4 +71,5 @@ function run(argv) {
       console.log(JSON.stringify(n));
     });
   });
+  $.exit(0);
 }
