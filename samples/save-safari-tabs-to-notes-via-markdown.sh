@@ -5,8 +5,8 @@
 
 # Pre-reqs: jq, pandoc
 
-osacli=../dist/osacli
+automac=../dist/automac
 
 ./safari-tabs-as-markdown.sh |\
     pandoc -f markdown -t html |\
-    $osacli notes create "Open Tabs"
+    $automac notes create "Open Tabs"

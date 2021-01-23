@@ -13,5 +13,5 @@ if [[ $# -ne 1 ]]; then
     exit 1;
 fi
 
-osacli=../dist/osacli
-$osacli notes get-by-id "$1" | jq -r .body
+automac=../dist/automac
+$automac notes get-by-id "$1" | jq -r .body

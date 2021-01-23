@@ -1,4 +1,4 @@
-# jxa
+# `automac` - Shell Automation for macOS
 
 JavaScript for Automation provides the ability to use JavaScript for
 interapplication communication between apps in OS X. These repo contains a
@@ -72,3 +72,5 @@ In theory, scripts could be imported using the `Library` function as described
 * [ ] Research how to install/add to brew/brew cask.
 * [ ] Support different output formats like `aws cli`.
 * [ ] Record gif video for the README.md
+* [ ] Refactor so that command not found doesn't match the exit code of invalid
+  arguments.

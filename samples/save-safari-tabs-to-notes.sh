@@ -5,8 +5,8 @@
 
 # Pre-reqs: jq
 
-osacli=../dist/osacli
+automac=../dist/automac
 
-$osacli safari list-tabs |\
+$automac safari list-tabs |\
      jq -r '"<a href=\"" + .url + "\"> " + .name + "</a><br/>" ' |\
-     $osacli notes create "Open Tabs from Safari"
+     $automac notes create "Open Tabs from Safari"

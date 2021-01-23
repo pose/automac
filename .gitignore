@@ -8,11 +8,11 @@ configure
 depcomp
 install-sh
 missing
-osacli
-osacli.1
+automac
+automac.1
 test-driver
 test-suite.log
 tests/*.log
 tests/*.trs
-osacli-0.1.tar.gz
+automac-0.1.tar.gz
 

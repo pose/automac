@@ -11,8 +11,8 @@ if [[ $# -ne 1 ]]; then
     exit 1;
 fi
 
-osacli=../dist/osacli
-notesById="$($osacli notes list-folder-by-id "$1" | jq -r .id)"
+automac=../dist/automac
+notesById="$($automac notes list-folder-by-id "$1" | jq -r .id)"
 
 # Taken from https://stackoverflow.com/questions/47050589/create-url-friendly-slug-with-pure-bash
 slugify () {
@@ -24,7 +24,7 @@ outputDirectory=result
 mkdir -p $outputDirectory
 
 for noteId in $notesById; do
-    note=$($osacli notes get-by-id "$noteId")
+    note=$($automac notes get-by-id "$noteId")
     name="$(echo "$note" | jq -r .name)"
     slug="$(slugify "$name")"
     pathname="$outputDirectory/$slug.html"
