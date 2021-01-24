@@ -43,6 +43,10 @@ function testNotes {
         $automac notes create "Note For Testing")
     newNoteId=$(echo "$newNote" | jq -r '.id')
 
+    listOfNotes=$($automac notes list)
+
+    assertContains "$newNoteId" "$(echo "$listOfNotes" | jq -r .id)"
+
     $automac notes delete "$newNoteId"
 }
 
