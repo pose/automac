@@ -5,10 +5,15 @@ console.log = function () {
   for (argument of arguments) {
     $.NSFileHandle.fileHandleWithStandardOutput.writeData(
       $.NSString.alloc
-        .initWithString(String(argument) + "\n")
+        .initWithString(String(argument) + " ")
         .dataUsingEncoding($.NSUTF8StringEncoding)
     );
   }
+    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
+      $.NSString.alloc
+        .initWithString("\n")
+        .dataUsingEncoding($.NSUTF8StringEncoding)
+    );
 };
 
 console.error = function () {
@@ -21,28 +26,6 @@ console.error = function () {
   }
 };
 
-const asArray = (pseudoArray, mappingFunction) => {
-  const result = [];
-
-  for (let i = 0; i < pseudoArray.length; i++) {
-    let element = pseudoArray[i];
-
-    if (mappingFunction) {
-      element = mappingFunction(element);
-    }
-    result.push(element);
-  }
-
-  return result;
-};
-
-const keyMapper = (allowlist) => (el) => {
-  return allowlist.reduce((acc, allowlistedItem) => {
-    acc[allowlistedItem] = el[allowlistedItem]();
-    return acc;
-  }, {});
-};
-
 function run(argv) {
   const notes = Application("Notes");
 
@@ -51,25 +34,36 @@ function run(argv) {
     return;
   }
 
-  const folders = asArray(notes.folders, (f) => ({
-    ...f,
-    id: f.id(),
-    name: f.name(),
-    notes: asArray(f.notes, keyMapper(["name", "id"])).map((n) => ({
-      ...n,
-      "container.id": f.id(),
-      "container.name": f.name(),
-    })),
-  }));
+  const folders = notes.folders();
 
-  folders.forEach((f) => {
-    if (f.name === "Recently Deleted") {
-      return;
+  // Since this operation takes a long time with notes containing multiple
+  // pictures, print the data as soon as it is available.
+  for (let i = 0; i < folders.length; i++) {
+    const notesById = notes.folders[i].notes.id();
+    const notesByName = notes.folders[i].notes.name();
+    for (let j = 0; j < notesById.length; j++) {
+      const start = Date.now();
+      // TODO This brings the whole note including the attachments (which takes a long time)
+      const {passwordProtected, modificationDate, creationDate, shared, id,
+        name} = notes.notes.byId(notesById[j]).properties();
+
+      const note = {
+        id,
+        name,
+        passwordProtected,
+        modificationDate,
+        creationDate,
+        shared,
+        "container.id": folders[i].id(),
+        "container.name": folders[i].name()
+      };
+
+      console.log(JSON.stringify(note));
+      // Useful for debugging which notes take a long time to process
+      // console.log(Date.now() - start, notesById[j], notesByName[j]);
     }
 
-    f.notes.forEach((n) => {
-      console.log(JSON.stringify(n));
-    });
-  });
+  }
+
   $.exit(0);
 }
