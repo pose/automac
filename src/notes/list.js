@@ -34,7 +34,19 @@ function run(argv) {
     return;
   }
 
-  const folders = notes.folders();
+  let folders;
+  try {
+    folders = notes.folders();
+  } catch (err) {
+    // Permissions issue
+    if (err.errorNumber === -1743) {
+      $.exit(3);
+    } else {
+      console.error(`Unknown error: ${err} [${err.errorNumber}]`);
+      $.exit(50);
+    }
+    return;
+  }
 
   // Since this operation takes a long time with notes containing multiple
   // pictures, print the data as soon as it is available.

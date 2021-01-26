@@ -8,6 +8,12 @@ automac=${automac:-./automac}
 # TODO test when permissions are not granted
 # etc.
 
+# TODO How to bail if this test fails
+function testPermissions {
+    $automac notes list > /dev/null
+    assertNotEquals "Required permissions have not been granted" 3 $?
+}
+
 function testListArguments {
     # Should fail with one or more arguments
     $automac notes list foo
