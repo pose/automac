@@ -1,4 +1,5 @@
 ObjC.import("Foundation");
+ObjC.import("stdlib");
 
 console.log = function () {
   for (argument of arguments) {
@@ -32,6 +33,6 @@ function readFromStdin() {
 }
 
 function run(argv) {
-  console.error("stdin:" + JSON.stringify(readFromStdin()));
-  console.error("argv: " + JSON.stringify(argv));
+  console.log(JSON.stringify({stdin: readFromStdin(),argv}));
+  $.exit(0);
 }
