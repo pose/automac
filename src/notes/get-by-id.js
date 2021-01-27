@@ -1,4 +1,5 @@
 ObjC.import("Foundation");
+ObjC.import("stdlib");
 
 console.log = function () {
   for (argument of arguments) {
@@ -28,20 +29,25 @@ function run(argv) {
   // notes.strictCommandScope = true
   notes.strictParameterType = true;
 
+  if (argv.length !== 1) {
+    $.exit(1);
+    return;
+  }
+
   // TODO validate
   const noteId = argv[0];
 
+  // XXX For some reason, when permissions are not granted and the note is not
+  // found this line doesn't throw a permissions error. This needs more investigation.
   const foundNote = notes.notes.byId(noteId);
 
   if (foundNote.exists() === false) {
-    // TODO stderr
     console.error("Note not found.");
+    $.exit(2);
     return;
   }
 
   // TODO Getting the container data seems impossible
   console.log(JSON.stringify(foundNote.properties()));
-
-  // Life saver!
-  // console.log(JSON.stringify(foundNotes[0].properties()));
+  $.exit(0);
 }

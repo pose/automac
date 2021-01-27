@@ -1,4 +1,5 @@
 ObjC.import("Foundation");
+ObjC.import("stdlib");
 
 console.log = function () {
   for (argument of arguments) {
@@ -28,21 +29,23 @@ function run(argv) {
   // notes.strictCommandScope = true
   notes.strictParameterType = true;
 
-  // TODO validate
+  if (argv.length !== 1) {
+    // TODO Add message
+    $.exit(1);
+    return;
+  }
   const folderId = argv[0];
 
   const foundFolder = notes.folders.byId(folderId);
 
   if (foundFolder.exists() === false) {
-    // TODO stderr
     console.error("Folder not found.");
+    $.exit(2);
     return;
   }
 
   // TODO Getting the container data seems impossible
   const notesById = foundFolder.notes.id();
   notesById.forEach((noteId) => console.log(JSON.stringify({ id: noteId })));
-
-  // Life saver!
-  // console.log(JSON.stringify(foundNotes[0].properties()));
+  $.exit(0);
 }
