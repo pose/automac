@@ -9,11 +9,11 @@ console.log = function () {
         .dataUsingEncoding($.NSUTF8StringEncoding)
     );
   }
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString("\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
+  $.NSFileHandle.fileHandleWithStandardOutput.writeData(
+    $.NSString.alloc
+      .initWithString("\n")
+      .dataUsingEncoding($.NSUTF8StringEncoding)
+  );
 };
 
 console.error = function () {
@@ -52,12 +52,17 @@ function run(argv) {
   // pictures, print the data as soon as it is available.
   for (let i = 0; i < folders.length; i++) {
     const notesById = notes.folders[i].notes.id();
-    const notesByName = notes.folders[i].notes.name();
     for (let j = 0; j < notesById.length; j++) {
       const start = Date.now();
       // TODO This brings the whole note including the attachments (which takes a long time)
-      const {passwordProtected, modificationDate, creationDate, shared, id,
-        name} = notes.notes.byId(notesById[j]).properties();
+      const {
+        passwordProtected,
+        modificationDate,
+        creationDate,
+        shared,
+        id,
+        name,
+      } = notes.notes.byId(notesById[j]).properties();
 
       const note = {
         id,
@@ -67,14 +72,13 @@ function run(argv) {
         creationDate,
         shared,
         "container.id": folders[i].id(),
-        "container.name": folders[i].name()
+        "container.name": folders[i].name(),
       };
 
       console.log(JSON.stringify(note));
       // Useful for debugging which notes take a long time to process
       // console.log(Date.now() - start, notesById[j], notesByName[j]);
     }
-
   }
 
   $.exit(0);
