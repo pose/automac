@@ -3,10 +3,6 @@
 automac=${automac:-./automac}
 
 # TODO Print error when arguments are wrong
-# TODO Delete args test
-# TODO list args test
-# TODO list folder args test
-# TODO test when permissions are not granted
 # etc.
 
 # TODO How to bail if this test fails
