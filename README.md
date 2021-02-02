@@ -1,8 +1,48 @@
 # `automac` - Shell Automation for macOS
 
-JavaScript for Automation provides the ability to use JavaScript for
-interapplication communication between apps in OS X. These repo contains a
-collection of some JXA (JavaScript for Automation) scripts.
+Author bash scripts for automation for macOS apps.
+
+Create shell scripts to automate macOS tasks. For instance, list tabs open on
+Safari by doing:
+
+## TODO Safari tab goes here
+
+```sh
+$ automac safari list-tabs
+{"name":"Example Domain","url":"https://example.com/","index":1,"windowId":3570}
+```
+
+Or create a new note on the macOS Notes app:
+
+```sh
+echo "Hello world" | automac notes create "New Note"
+{"pcls":"note","passwordProtected":false,"modificationDate":"2021-02-02T13:50:17.000Z","creationDate":"2021-02-02T13:50:17.000Z","shared":false,"body":"<div><font face=\"Helvetica\"><span style=\"font-size: 12px\">New Note</span></font></div>\n<div>Hello World </div>\n","id":"x-coredata://F123D456-1234-1234-1234-111111111111/ICNote/p1234","name":"New Note","plaintext":"New Note\nHello World "}
+```
+
+### TODO create new note goes here
+
+## Usage
+
+```sh
+automac <app> <command>
+```
+
+Examples:
+
+```sh
+# List all Safari tabs
+automac safari list-tabs
+
+# Open new Safari tab pointing to example.com
+automac safari open-tab https://example.com
+
+# List all Notes
+automac notes list
+
+# Retrieve a note by id
+automac notes get-by-id x-coredata://F123D456-1234-1234-1234-111111111111/ICNote/p1234
+```
+
 
 ### Tenets
 
