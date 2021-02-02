@@ -37,6 +37,7 @@ function run(argv) {
   notes.includeStandardAdditions = true;
 
   if (argv.length !== 1) {
+    console.error("Invalid number of arguments.");
     $.exit(1);
     return;
   }
