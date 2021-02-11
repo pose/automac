@@ -114,3 +114,5 @@ In theory, scripts could be imported using the `Library` function as described
 * [ ] Record gif video for the README.md
 * [ ] Refactor so that command not found doesn't match the exit code of invalid
   arguments.
+* [ ] Notes to RSS.
+* [ ] Safari tabs to RSS.
