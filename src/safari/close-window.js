@@ -1,45 +1,24 @@
-ObjC.import("Foundation");
-ObjC.import("stdlib");
-
-console.log = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
+exports.usage = () => {
+  console.error("Usage: automac safari close-window <window-id>");
 };
 
-console.error = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardError.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-function run(argv) {
+exports.main = (argv) => {
   const safari = Application("Safari");
 
   if (argv.length !== 1) {
-    // TODO Print usage
-    $.exit(1);
+    throw new InvalidArguments();
   }
 
-  const windowId = argv[0];
+  const [windowId] = argv;
 
   safari.windows().filter((w) => {
     if (String(w.id()) === windowId) {
+      // TODO Make this an argument
       w.close({saving: "no"});
       // XXX This is required since it won't reflect the close tab change
       // otherwise.
       safari.activate();
-      $.exit(0);
     }
   });
-  console.error("Window not found");
-  $.exit(2);
-}
+  throw new NotFound("Window not found");
+};

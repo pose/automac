@@ -1,52 +1,16 @@
-ObjC.import("Foundation");
-ObjC.import("stdlib");
-
-console.log = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-console.error = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardError.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-const asArray = (pseudoArray, mappingFunction) => {
-  const result = [];
-
-  for (let i = 0; i < pseudoArray.length; i++) {
-    let element = pseudoArray[i];
-
-    if (mappingFunction) {
-      element = mappingFunction(element);
-    }
-    result.push(element);
-  }
-
-  return result;
-};
-
 const serialize = (t) => {
   return {url: t.url(), name: t.name(), index: t.index()};
 };
 
+exports.usage = () => {
+  console.error("Usage: automac safari open-tab [<url>]");
+};
 
-function run(argv) {
+exports.main = (argv) => {
   const safari = Application("Safari");
 
   if (argv.length !== 0 && argv.length !== 1) {
-    $.exit(1);
-    return;
+    throw new InvalidArguments();
   }
 
   const options = {};
@@ -55,23 +19,9 @@ function run(argv) {
     options.url = argv[0];
   }
 
-  let res;
-  try {
-    res = safari.windows[0].tabs.push(new safari.Tab(options));
-  }
-  catch (err) {
-    // Permissions issue
-    if (err.errorNumber === -1743) {
-      $.exit(3);
-    } else {
-      console.error(`Unknown error: ${err} [${err.errorNumber}]`);
-      $.exit(50);
-    }
-    return;
-  }
+  res = safari.windows[0].tabs.push(new safari.Tab(options));
   console.log(JSON.stringify({
     ...serialize(safari.windows[0].tabs[res - 1]),
     windowId: safari.windows[0].id()
   }));
-  $.exit(0);
 }

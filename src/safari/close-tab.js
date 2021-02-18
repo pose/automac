@@ -1,38 +1,16 @@
-ObjC.import("Foundation");
-ObjC.import("stdlib");
+exports.usage = () => {
+  console.error("Usage: automac <windowId> <tabIndex>");
+}
 
-console.log = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-console.error = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardError.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-function run(argv) {
+exports.main = (argv) => {
   const safari = Application("Safari");
 
   if (argv.length !== 2) {
-    // TODO Print usage
-    console.error("Invalid number of arguments");
-    $.exit(1);
-    return;
+    // InvalidArguments
+    throw new InvalidArguments("Invalid number of arguments");
   }
 
-  const windowId = argv[0];
-  const tabIndex = argv[1];
+  const [windowId, tabIndex] = argv;
 
   safari.windows().filter((w) => {
     if (String(w.id()) === windowId) {
@@ -40,6 +18,7 @@ function run(argv) {
       $.exit(0);
     }
   });
-  console.error("Window and tab not found");
-  $.exit(2);
+
+
+  throw new NotFound("Window or tab not found");
 }
