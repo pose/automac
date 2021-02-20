@@ -1,28 +1,10 @@
-ObjC.import("Foundation");
-ObjC.import("stdlib");
-
-console.log = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
+exports.usage = () => {
+  console.error("Usage: automac notes delete <note-id>");
 };
 
-console.error = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardError.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-function run(argv) {
+exports.main = (argv) => {
   const notes = Application("Notes");
+  // TODO Why is this required?
   notes.includeStandardAdditions = true;
   notes.strictPropertyScope = true;
   // TODO This breaks exists
@@ -30,20 +12,15 @@ function run(argv) {
   notes.strictParameterType = true;
 
   if (argv.length !== 1) {
-    $.exit(1);
-    return;
+    throw new InvalidArguments();
   }
 
-  const noteId = argv[0];
+  const [noteId] = argv;
   const foundNote = notes.notes.byId(noteId);
 
   if (foundNote.exists() === false) {
-    // TODO stderr
-    console.error("Note not found.");
-    $.exit(2);
-    return;
+    throw new NotFound("Note not found.");
   }
 
   foundNote.delete();
-  $.exit(0);
 }

@@ -1,27 +1,8 @@
-ObjC.import("Foundation");
-ObjC.import("stdlib");
-
-console.log = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
+exports.usage = () => {
+  console.error("Usage: automac notes list-folder-by-id <folder-id>");
 };
 
-console.error = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardError.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-function run(argv) {
+exports.main = (argv) => {
   const notes = Application("Notes");
   notes.includeStandardAdditions = true;
   notes.strictPropertyScope = true;
@@ -30,22 +11,17 @@ function run(argv) {
   notes.strictParameterType = true;
 
   if (argv.length !== 1) {
-    // TODO Add message
-    $.exit(1);
-    return;
+    throw new InvalidArguments();
   }
-  const folderId = argv[0];
 
+  const [folderId] = argv;
   const foundFolder = notes.folders.byId(folderId);
 
   if (foundFolder.exists() === false) {
-    console.error("Folder not found.");
-    $.exit(2);
-    return;
+    throw new NotFound("Note not found");
   }
 
   // TODO Getting the container data seems impossible
   const notesById = foundFolder.notes.id();
   notesById.forEach((noteId) => console.log(JSON.stringify({ id: noteId })));
-  $.exit(0);
 }

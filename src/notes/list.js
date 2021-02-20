@@ -1,52 +1,15 @@
-ObjC.import("Foundation");
-ObjC.import("stdlib");
-
-console.log = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + " ")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-  $.NSFileHandle.fileHandleWithStandardOutput.writeData(
-    $.NSString.alloc
-      .initWithString("\n")
-      .dataUsingEncoding($.NSUTF8StringEncoding)
-  );
+exports.usage = () => {
+  console.error("Usage: automac notes list");
 };
 
-console.error = function () {
-  for (argument of arguments) {
-    $.NSFileHandle.fileHandleWithStandardError.writeData(
-      $.NSString.alloc
-        .initWithString(String(argument) + "\n")
-        .dataUsingEncoding($.NSUTF8StringEncoding)
-    );
-  }
-};
-
-function run(argv) {
+exports.main = (argv) => {
   const notes = Application("Notes");
 
   if (argv.length !== 0) {
-    $.exit(1);
-    return;
+    throw new InvalidArguments();
   }
 
-  let folders;
-  try {
-    folders = notes.folders();
-  } catch (err) {
-    // Permissions issue
-    if (err.errorNumber === -1743) {
-      $.exit(3);
-    } else {
-      console.error(`Unknown error: ${err} [${err.errorNumber}]`);
-      $.exit(50);
-    }
-    return;
-  }
+  const folders = notes.folders();
 
   // Since this operation takes a long time with notes containing multiple
   // pictures, print the data as soon as it is available.
@@ -81,5 +44,4 @@ function run(argv) {
     }
   }
 
-  $.exit(0);
 }

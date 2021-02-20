@@ -21,10 +21,8 @@ for FOLDER_PATH in $SRC_FOLDERS; do
         echo "# $cmdAndSubCmd"
         echo "function $cmdAndSubCmd {"
         echo "exec osascript -l JavaScript - \"\$@\" 3<&0 <<'EOF$cmdAndSubCmd'"
-        # TODO Only support prelude/init style for safari command for now
-        if [[ "$CMD" == "safari" ]]; then
-            cat "$DIR/src/init.js"
-        fi
+        # Append src/init.js to the beginning of the file
+        cat "$DIR/src/init.js"
         cat "$i"
         echo "EOF$cmdAndSubCmd"
         echo '}'
