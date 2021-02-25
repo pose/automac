@@ -5,7 +5,7 @@
 
 # Pre-reqs: jq, pandoc
 
-automac=../dist/automac
+automac=../automac
 
 ./safari-tabs-as-markdown.sh |\
     pandoc -f markdown -t html |\

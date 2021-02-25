@@ -5,7 +5,7 @@
 
 # Pre-reqs: jq
 
-automac=../dist/automac
+automac=../automac
 
 $automac safari list-tabs |\
      jq -r '"<a href=\"" + .url + "\"> " + .name + "</a><br/>" ' |\

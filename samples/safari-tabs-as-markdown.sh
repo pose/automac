@@ -4,7 +4,7 @@
 
 # Pre-reqs: jq
 
-automac=../dist/automac
+automac=../automac
 
 windows="$($automac safari list-windows)"
 

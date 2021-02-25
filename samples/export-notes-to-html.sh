@@ -11,7 +11,7 @@ if [[ $# -ne 1 ]]; then
     exit 1;
 fi
 
-automac=../dist/automac
+automac=../automac
 notesById="$($automac notes list-folder-by-id "$1" | jq -r .id)"
 
 # Taken from https://stackoverflow.com/questions/47050589/create-url-friendly-slug-with-pure-bash
