@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac <windowId> <tabIndex>");
-}
+exports.usage = () => "<windowId> <tabIndex>";
 
 exports.main = (argv) => {
   const safari = Application("Safari");
@@ -19,6 +17,5 @@ exports.main = (argv) => {
     }
   });
 
-
   throw new NotFound("Window or tab not found");
-}
+};

@@ -26,8 +26,8 @@ console.error = function () {
   }
   $.NSFileHandle.fileHandleWithStandardError.writeData(
     $.NSString.alloc
-    .initWithString(String(argument) + "\n")
-    .dataUsingEncoding($.NSUTF8StringEncoding)
+      .initWithString("\n")
+      .dataUsingEncoding($.NSUTF8StringEncoding)
   );
 };
 
@@ -64,20 +64,85 @@ const keyMapper = (allowlist) => (el) => {
   }, {});
 };
 
-class InvalidArguments extends Error { }
-class NotFound extends Error { }
+class InvalidArguments extends Error {}
+class NotFound extends Error {}
+
+const modules = {};
+
+const help = (module, command) => {
+  let result = `usage: automac ${module} <command> <args>\n\n`;
+  Object.entries(modules[module]).forEach(([key, value]) => {
+    if (value.usage) {
+      result += `    ${key} ${value.usage()}\n`;
+    }
+  });
+  console.error(result);
+};
+
+const printUsage = () => {
+  console.error("usage: automac <module> <command>");
+  console.error("");
+  console.error("These are the currently supported modules:");
+  console.error("");
+  Object.entries(modules).forEach(
+    ([
+      module,
+      {
+        index: { description },
+      },
+    ]) => {
+      console.error(`    ${module} - ${description()}`);
+    }
+  );
+};
 
 function run(argv) {
-  const {main, usage} = module.exports;
+  // called without arguments
+  if (argv.length === 0) {
+    printUsage();
+    $.exit(1);
+    return;
+  }
+
+  // Invalid command
+  if (!modules[argv[0]]) {
+    printUsage();
+    $.exit(1);
+    return;
+  }
+
+  // called with one argument, should call help on that
+  // argument.
+  if (argv.length === 1) {
+    help(argv[0]);
+    $.exit(1);
+    return;
+  }
+
+  // Invalid subcommand
+  if (!modules[argv[0]][argv[1]]) {
+    help(argv[0]);
+    $.exit(1);
+    return;
+  }
+
+  const { main, usage } = modules[argv[0]][argv[1]];
+
+  if (!main) {
+    printUsage();
+    $.exit(1);
+    return;
+  }
+
   try {
-    main(argv);
+    main(argv.slice(2));
     $.exit(0);
   } catch (err) {
     if (err instanceof InvalidArguments) {
       console.error("Invalid arguments.");
+      help(argv[0]);
       usage();
       $.exit(1);
-
     } else if (err instanceof NotFound) {
       console.error(err);
       usage();
@@ -86,17 +151,10 @@ function run(argv) {
       // Permissions issue
     } else if (err.errorNumber === -1743) {
       $.exit(3);
-
     } else {
       console.error(`Unknown error: ${err} [${err.errorNumber}]`);
       $.exit(50);
     }
     return;
   }
-}
-
-if (typeof module === 'undefined') {
-  module = {};
-  exports = {};
-  module.exports = exports;
 }

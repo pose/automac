@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac notes get-by-id <note-id>");
-};
+exports.usage = () => "<note-id>";
 
 exports.main = (argv) => {
   const notes = Application("Notes");

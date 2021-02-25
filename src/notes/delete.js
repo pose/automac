@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac notes delete <note-id>");
-};
+exports.usage = () => "<note-id>";
 
 exports.main = (argv) => {
   const notes = Application("Notes");
@@ -23,4 +21,4 @@ exports.main = (argv) => {
   }
 
   foundNote.delete();
-}
+};

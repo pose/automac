@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac notes create <name>");
-};
+exports.usage = () => "<name>";
 
 exports.main = (argv) => {
   const notes = Application("Notes");
@@ -13,4 +11,4 @@ exports.main = (argv) => {
 
   const note = notes.Note({ name: argv[0], body: readFromStdin() }).make();
   console.log(JSON.stringify(note.properties()));
-}
+};

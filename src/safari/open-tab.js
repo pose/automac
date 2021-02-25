@@ -1,10 +1,8 @@
 const serialize = (t) => {
-  return {url: t.url(), name: t.name(), index: t.index()};
+  return { url: t.url(), name: t.name(), index: t.index() };
 };
 
-exports.usage = () => {
-  console.error("Usage: automac safari open-tab [<url>]");
-};
+exports.usage = () => "[url]";
 
 exports.main = (argv) => {
   const safari = Application("Safari");
@@ -20,8 +18,10 @@ exports.main = (argv) => {
   }
 
   res = safari.windows[0].tabs.push(new safari.Tab(options));
-  console.log(JSON.stringify({
-    ...serialize(safari.windows[0].tabs[res - 1]),
-    windowId: safari.windows[0].id()
-  }));
-}
+  console.log(
+    JSON.stringify({
+      ...serialize(safari.windows[0].tabs[res - 1]),
+      windowId: safari.windows[0].id(),
+    })
+  );
+};

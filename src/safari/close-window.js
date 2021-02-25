@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac safari close-window <window-id>");
-};
+exports.usage = () => "<window-id>";
 
 exports.main = (argv) => {
   const safari = Application("Safari");
@@ -14,7 +12,7 @@ exports.main = (argv) => {
   safari.windows().filter((w) => {
     if (String(w.id()) === windowId) {
       // TODO Make this an argument
-      w.close({saving: "no"});
+      w.close({ saving: "no" });
       // XXX This is required since it won't reflect the close tab change
       // otherwise.
       safari.activate();

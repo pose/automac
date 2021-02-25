@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac notes list");
-};
+exports.usage = () => "";
 
 exports.main = (argv) => {
   const notes = Application("Notes");
@@ -43,5 +41,4 @@ exports.main = (argv) => {
       // console.log(Date.now() - start, notesById[j], notesByName[j]);
     }
   }
-
-}
+};

@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac notes list-folder-by-id <folder-id>");
-};
+exports.usage = () => "<folder-id>";
 
 exports.main = (argv) => {
   const notes = Application("Notes");
@@ -24,4 +22,4 @@ exports.main = (argv) => {
   // TODO Getting the container data seems impossible
   const notesById = foundFolder.notes.id();
   notesById.forEach((noteId) => console.log(JSON.stringify({ id: noteId })));
-}
+};

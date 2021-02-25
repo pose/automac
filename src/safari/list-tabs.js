@@ -1,6 +1,4 @@
-exports.usage = () => {
-  console.error("Usage: automac safari list-tabs");
-};
+exports.usage = () => "";
 
 exports.main = (argv) => {
   const safari = Application("Safari");
