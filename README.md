@@ -26,7 +26,7 @@ $ echo "Hello world" | automac notes create "New Note"
 
 Which will show:
 
-![](./doc/new-note-64.png)
+![](./docs/new-note-64.png)
 
 Open a new Safari tab:
 
