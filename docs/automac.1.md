@@ -2,16 +2,18 @@
 
 # NAME
 
-**automac** - CLI scripts for OS X automation.
+**automac** - Shell Automation for macOS.
 
 # SYNOPSIS
 
-| **automac** \<**command**\> \<**subcommand**\>
+| **automac** \<**module**\> \<**command**\>
 
 # DESCRIPTION
 
-**automac** allows shell scripting with OS X applications. For instance, it
+**automac** allows shell scripting with macOS applications. For instance, it
 allows accessing Safari tabs, obtaining entries from the Notes app, etc.
+
+For detailed help on any particular module, execute `automac help <module>`.
 
 # OPTIONS
 
