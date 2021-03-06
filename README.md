@@ -6,6 +6,34 @@
 automac <module> <command>
 ```
 
+## Background
+
+macOS offers many interactive applications such as the Notes and Safari apps.
+Unfortunately, the way to interact with those apps programmatically is rather
+limited and developers are forced to use [Applescript][applescript] or
+[JXA][jxa]. Those automation tools are hard to debug, develop, and test: There
+are multiple Stack Overflow posts pointing at JXA being fundamentally
+[broken][jxa-broken], [undocumented][jxa-undocumented],
+[unsupported][jxa-unsupported] and [cumbersome][jxa-cumbersome].
+
+[applescript]: https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983
+[jxa]: https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html#//apple_ref/doc/uid/TP40014508
+[jxa-broken]: https://stackoverflow.com/a/48271686
+[jxa-cumbersome]: https://stackoverflow.com/questions/57217151/how-to-get-multiple-properties-from-objects-in-jxa
+[jxa-unsupported]: https://stackoverflow.com/questions/47940322/cant-find-jxa-documentation?rq=1#comment101622733_47940322
+[jxa-undocumented]: https://stackoverflow.com/questions/62834881/overcome-the-lack-of-jxa-documentation-by-being-able-to-explore-the-variables-in
+
+`automac` enables shell scripting for macOS applications by doing the JXA
+heavy lifting and providing a simplified command line interface. This tool
+provides composable standard input and output, an extendable modular system
+with commands that do one (and only one) thing, and JSON output by default. In
+addition to that, `automac` executable is self-contained and doesn't require
+any dependencies given that it only requires JXA that is already provided as
+part of every macOS installation.
+
+Some examples of integration with other tools command line tools such as `jq`,
+`pandoc`, `aws`, and `sqlite3` can be found on the [`samples`](./samples) folder.
+
 ## Examples
 
 For instance, create a new note on the macOS Notes app:
@@ -58,34 +86,6 @@ automac notes get-by-id x-coredata://F123D456-1234-1234-1234-111111111111/ICNote
 
 For additional examples see the [samples](./samples) folder.
 
-## Background
-
-macOS offers many interactive applications such as the Notes and Safari apps.
-Unfortunately, the way to interact with those apps programmatically is rather
-limited and developers are forced to use [Applescript][applescript] or
-[JXA][jxa]. Those automation tools are hard to debug, develop, and test: There
-are multiple Stack Overflow posts pointing at JXA being fundamentally
-[broken][jxa-borken], [undocumented][jxa-undocumented],
-[unsupported][jxa-unsupported] and [cumbersome][jxa-cumbersome].
-
-[applescript]: https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/introduction/ASLR_intro.html#//apple_ref/doc/uid/TP40000983
-[jxa]: https://developer.apple.com/library/archive/releasenotes/InterapplicationCommunication/RN-JavaScriptForAutomation/Articles/Introduction.html#//apple_ref/doc/uid/TP40014508
-[jxa-broken]: https://stackoverflow.com/a/48271686
-[jxa-cumbersome]: https://stackoverflow.com/questions/57217151/how-to-get-multiple-properties-from-objects-in-jxa
-[jxa-unsupported]: https://stackoverflow.com/questions/47940322/cant-find-jxa-documentation?rq=1#comment101622733_47940322
-[jxa-undocumented]: https://stackoverflow.com/questions/62834881/overcome-the-lack-of-jxa-documentation-by-being-able-to-explore-the-variables-in
-
-`automac` enables shell scripting for macOS applications by doing the JXA
-heavy lifting and providing a simplified command line interface. This tool
-provides composable standard input and output, an extendable modular system
-with commands that do one (and only one) thing, and JSON output by default. In
-addition to that, `automac` executable is self-contained and doesn't require
-any dependencies given that it only requires JXA that is already provided as
-part of every macOS installation.
-
-Some examples of integration with other tools command line tools such as `jq`,
-`pandoc`, `aws`, and `sqlite3` can be found on the [`samples`](./samples) folder.
-
 ## Installation
 
 ```sh
@@ -131,6 +131,7 @@ from JavaScript files.
 No, everything is scripted and uses macOS `osascript` for executing commands.
 
 ## Why is the bundling done by concatenating JavaScript files instead of using
+
 ## a proper bundling solution such like Webpack?
 
 This was done to keep the project simple and dependency free. Migrating to
