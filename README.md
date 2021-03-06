@@ -23,11 +23,11 @@ There are multiple Stack Overflow posts pointing at JXA being fundamentally
 [jxa-unsupported]: https://stackoverflow.com/questions/47940322/cant-find-jxa-documentation?rq=1#comment101622733_47940322
 [jxa-undocumented]: https://stackoverflow.com/questions/62834881/overcome-the-lack-of-jxa-documentation-by-being-able-to-explore-the-variables-in
 
-`automac` enables shell scripting for macOS applications by doing the JXA
-heavy lifting and providing a simplified command line interface. This tool
-provides composable standard input and output, an extendable modular system
-with commands that do one (and only one) thing, and JSON output by default. In
-addition to that, `automac` executable is self-contained and doesn't require
+`automac` enables shell scripting for macOS applications by doing the JXA heavy
+lifting and providing a simplified command line interface. Some of its features
+are: composable standard input and output, an extendable modular system with
+commands that do one (and only one) thing, and JSON output by default. In
+addition to that, the `automac` executable is self-contained and doesn't have
 any dependencies given that it only requires JXA that is already provided as
 part of every macOS installation.
 
@@ -36,7 +36,7 @@ Some examples of integration with other tools command line tools such as `jq`,
 
 ## Examples
 
-For instance, create a new note on the macOS Notes app:
+For instance, by sending the following command to the macOS Notes app:
 
 ```sh
 $ echo "Hello world" | automac notes create "New Note"
@@ -50,11 +50,11 @@ $ echo "Hello world" | automac notes create "New Note"
 }
 ```
 
-Which will show:
+It will produce the following new note:
 
 ![](./docs/new-note-64.png)
 
-Open a new Safari tab:
+Or by executing this operation on Safari:
 
 ```sh
 # Open new Safari tab pointing to example.com
@@ -67,11 +67,11 @@ $ automac safari open-tab https://example.com
 }
 ```
 
-Which will result in:
+It will result in the following tab to be created:
 
 ![](./docs/safari-tab-64.png)
 
-Some other supported commands:
+These are some other available commands:
 
 ```sh
 # List all Safari tabs
@@ -117,30 +117,14 @@ end-to-end test require right permissions to be set.
 Currently, the project has only been tested on Big Sur but there are no
 restrictions for previous macOS versions that support JXA.
 
-## How does it work?
-
-`automac` uses JXA macOS JavaScript automation framework.
-
-## Does this project contain any dependencies?
-
-No, the idea is that the generated executable is self-contained and assembled
-from JavaScript files.
-
 ## Does this module require any native component compilation?
 
 No, everything is scripted and uses macOS `osascript` for executing commands.
 
-## Why is the bundling done by concatenating JavaScript files instead of using
+## Why is the bundling done by concatenating JavaScript files instead of using a proper bundling solution such like Webpack?
 
-## a proper bundling solution such like Webpack?
-
-This was done to keep the project simple and dependency free. Migrating to
-Webpack could be added later if required.
-
-## Why not using regular `Library` import when running tests instead of a custom require?
-
-In theory, scripts could be imported using the `Library` function as described
-[here](https://developer.apple.com/library/archive/documentation/AppleScript/Conceptual/AppleScriptLangGuide/conceptual/ASLR_script_objects.html). However, it doesn't work out of the box due to [OSA_LIBRARY_PATH environment variable is ignored by restricted executables when running with System Integrity Protection enabled](https://stackoverflow.com/questions/35389058/why-wont-osa-library-path-not-work-as-documented-for-jxa).
+This was done to keep the project simple and dependency free. Webpack could
+definitely be added if required.
 
 ## Are there any other similar tools available?
 
