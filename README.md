@@ -52,7 +52,7 @@ $ echo "Hello world" | automac notes create "New Note"
 
 It will produce the following new note with contents obtained from `stdin`:
 
-![](./docs/new-note-64.png)
+![](./docs/new-note.png)
 
 Or by executing this command on Safari:
 
@@ -70,7 +70,7 @@ $ automac safari open-tab https://example.com
 It will result in the following tab to be created using the command line passed
 URL:
 
-![](./docs/safari-tab-64.png)
+![](./docs/safari-tab.png)
 
 These are some other available commands:
 
