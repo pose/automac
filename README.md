@@ -11,8 +11,8 @@ automac <module> <command>
 macOS offers many interactive applications such as the Notes and Safari apps.
 Unfortunately, the way to interact with those apps programmatically is rather
 limited and developers are forced to use [Applescript][applescript] or
-[JXA][jxa]. Those automation tools are hard to debug, develop, and test: There
-are multiple Stack Overflow posts pointing at JXA being fundamentally
+[JXA][jxa]. These automation solutions are hard to debug, develop, and test:
+There are multiple Stack Overflow posts pointing at JXA being fundamentally
 [broken][jxa-broken], [undocumented][jxa-undocumented],
 [unsupported][jxa-unsupported] and [cumbersome][jxa-cumbersome].
 
