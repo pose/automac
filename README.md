@@ -140,8 +140,6 @@ bridge between macOS but using Lua instead to script automation.
   - [ ]Documentation for each command
   - [ ] Complete man pages
   - [ ]Combine man pages with help options
-- [ ] When installing, make sure to make the test targets optional if `jq` and
-      `shunit2` are not present.
 - [ ] Research how to install/add to brew/brew cask.
 
 ### Features
