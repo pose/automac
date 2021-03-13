@@ -137,10 +137,11 @@ bridge between macOS but using Lua instead to script automation.
 ### For launch
 
 - [ ] Complete the help command:
-  - [ ]Documentation for each command
+  - [ ] Documentation for each command
   - [ ] Complete man pages
-  - [ ]Combine man pages with help options
+  - [ ] Combine man pages with help options
 - [ ] Research how to install/add to brew/brew cask.
+- [ ] Publish the executable on Github.
 
 ### Features
 
