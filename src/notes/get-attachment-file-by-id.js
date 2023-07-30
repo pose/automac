@@ -1,4 +1,4 @@
-exports.usage = () => "<note-id>";
+exports.usage = () => "<attachment-id>";
 
 exports.main = (argv) => {
   const notes = Application("Notes");
@@ -13,24 +13,17 @@ exports.main = (argv) => {
   }
 
   // TODO validate
-  const [noteId] = argv;
+  const [attachmentId] = argv;
 
   // XXX For some reason, when permissions are not granted and the note is not
   // found this line doesn't throw a permissions error. This needs more investigation.
-  const foundNote = notes.notes.byId(noteId);
+  const foundAttachment = notes.attachments.byId(attachmentId);
 
-  if (foundNote.exists() === false) {
-    throw new NotFound("Note not found");
-  }
-
-  let attachments = [];
-  if (foundNote.attachments.length !== 0) {
-    attachments = asArray(foundNote.attachments, (attachment) => ({
-    ...attachment.properties(),
-      contents: attachment.contents().toString()
-    }));
+  if (foundAttachment.exists() === false) {
+    throw new NotFound("Attachment not found");
   }
 
   // TODO Getting the container data seems impossible
-  console.log(JSON.stringify({...foundNote.properties(), attachments}));
+  // console.log(foundAttachment.contents());
+  console.log(JSON.stringify({id: foundAttachment.id(), filepath: foundAttachment.contents().toString()}));
 };

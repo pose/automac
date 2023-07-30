@@ -16,6 +16,7 @@ exports.main = (argv) => {
     for (let j = 0; j < notesById.length; j++) {
       const start = Date.now();
       // TODO This brings the whole note including the attachments (which takes a long time)
+      const rawNote = notes.notes.byId(notesById[j]);
       const {
         passwordProtected,
         modificationDate,
@@ -23,7 +24,7 @@ exports.main = (argv) => {
         shared,
         id,
         name,
-      } = notes.notes.byId(notesById[j]).properties();
+      } = rawNote.properties();
 
       const note = {
         id,
@@ -34,9 +35,13 @@ exports.main = (argv) => {
         shared,
         "container.id": folders[i].id(),
         "container.name": folders[i].name(),
+        attachments: asArray(rawNote.attachments, keyMapper(["id"]))
       };
 
-      console.log(JSON.stringify(note));
+      // By default, ignore the "Recenty Deleted" folder.
+      if (note["container.name"] !== 'Recently Deleted') {
+        console.log(JSON.stringify(note));
+      }
       // Useful for debugging which notes take a long time to process
       // console.log(Date.now() - start, notesById[j], notesByName[j]);
     }
