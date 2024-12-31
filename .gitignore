@@ -16,3 +16,30 @@ tests/*.log
 tests/*.trs
 automac-0.1.tar.gz
 
+# Rust build directory
+/target/
+
+# Rust lock file (you might want to commit this for binary projects)
+# Cargo.lock
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Debug files
+**/*.rs.bk
+
+# Database files
+*.db
+*.db-*
+
+# Environment files
+.env
+.env.local
+
+# OS specific files
+.DS_Store
+Thumbs.db
+

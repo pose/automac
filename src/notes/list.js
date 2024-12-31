@@ -42,7 +42,7 @@ exports.main = (argv) => {
       if (note["container.name"] !== 'Recently Deleted') {
         console.log(JSON.stringify(note));
       }
-      // Useful for debugging which notes take a long time to process
+      // Useful to debug which notes take a long time to process
       // console.log(Date.now() - start, notesById[j], notesByName[j]);
     }
   }

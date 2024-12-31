@@ -27,7 +27,7 @@ exports.main = (argv) => {
   if (foundNote.attachments.length !== 0) {
     attachments = asArray(foundNote.attachments, (attachment) => ({
     ...attachment.properties(),
-      contents: attachment.contents().toString()
+      contents: attachment.contents()?.toString() ?? null
     }));
   }
 

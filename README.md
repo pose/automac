@@ -26,13 +26,10 @@ There are multiple Stack Overflow posts pointing at JXA being fundamentally
 `automac` enables shell scripting for macOS applications by doing the JXA heavy
 lifting and providing a simplified command line interface. Some of its features
 are: composable standard input and output, an extendable modular system with
-commands that do one (and only one) thing, and JSON output by default. In
-addition to that, the `automac` executable is self-contained and doesn't have
-any dependencies given that it only requires JXA that is already provided as
-part of every macOS installation.
-
-Some examples of integration with other tools command line tools such as `jq`,
-`pandoc`, `aws`, and `sqlite3` can be found on the [`samples`](./samples) folder.
+commands that do one (and only one) thing, and new-line separated JSON output by
+default. In addition to that, the `automac` executable is self-contained and
+doesn't have any dependencies given that it only requires JXA that is already
+installed as part of every macOS installation.
 
 ## Examples
 
@@ -115,8 +112,9 @@ end-to-end test require right permissions to be set.
 
 ## What versions of macOS are supported?
 
-Currently, the project has only been tested on Big Sur but there are no
-restrictions for previous macOS versions that support JXA.
+Currently, the project has been tested on Big Sur (11.0) and above versions but
+there are no restrictions for previous macOS versions as long as they support
+JXA.
 
 ## Does this module require any native component compilation?
 
@@ -127,39 +125,12 @@ No, everything is scripted and uses macOS `osascript` for executing commands.
 This was done to keep the project simple and dependency free. Webpack could
 definitely be added if required.
 
+## Why does the project do not use TypeScript?
+
+The project is simple and dependency free. TypeScript would add a dependency
+and a build system.
+
 ## Are there any other similar tools available?
 
 [Hammerspoon](https://github.com/Hammerspoon/hammerspoon) provides a similar
 bridge between macOS but using Lua instead to script automation.
-
-## TODO
-
-### For launch
-
-- [ ] Complete the help command:
-  - [ ] Documentation for each command
-  - [ ] Complete man pages
-  - [ ] Combine man pages with help options
-- [ ] Research how to install/add to brew/brew cask.
-- [ ] Publish the executable on Github.
-
-### Features
-
-- [ ] Support for other browsers (not only Safari) to get the list of tabs.
-  - [ ] Firefox
-  - [ ] Google Chrome
-- [ ] Customizable output format
-- [ ] Achieve tiling of windows.
-- [ ] Support different output formats like `aws cli`.
-
-### Samples
-
-- [ ] Using `tesseract` to convert from notes with images to text!
-- [ ] Take a document with links and converting them to websites and adding
-      them to new notes to be read later. So a reading list can be converted to
-      different notes containing the actual articles!
-- [ ] Make notes a FUSE volume.
-- [ ] Notes to RSS.
-- [ ] Safari tabs to RSS.
-- [ ] Backup notes to s3
-- [ ] Backup and version notes in git.
