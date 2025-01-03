@@ -7,6 +7,13 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build
-        run: make all
-
+      - name: Run autoreconf
+        run: autoreconf -fi 
+      - name: Run configure
+        run: ./configure
+      - name: Run make
+        run: make
+      - name: Run tests
+        run: make check
+      - name : Run make install
+        run: make install
