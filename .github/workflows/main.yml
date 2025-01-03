@@ -16,4 +16,4 @@ jobs:
       - name: Run make
         run: make
       - name : Run make install
-        run: make install
+        run: DESTDIR="./install-test/" make install
