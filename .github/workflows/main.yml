@@ -1,7 +1,12 @@
+on:
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: macos-latest
-     steps:
+    steps:
       - uses: actions/checkout@v2
       - name: Build
         run: make all
+
