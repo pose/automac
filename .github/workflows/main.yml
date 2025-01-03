@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
-        run: brew install automake
+        run: brew install automake jq shunit2
       - name: Run autoreconf
         run: autoreconf -fi 
       - name: Run configure
