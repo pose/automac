@@ -1,3 +1,5 @@
+[![.github/workflows/main.yml](https://github.com/pose/automac/actions/workflows/main.yml/badge.svg)](https://github.com/pose/automac/actions/workflows/main.yml)
+
 # `automac` - Shell scripting for macOS applications
 
 ## Usage
