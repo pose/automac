@@ -101,6 +101,9 @@ function testTabs {
          "$listedTabIds"\
         "$newTabId"
 
+    $automac safari get-tab-source $newTabId > /dev/null
+    assertEquals 0 $?
+
     $automac safari close-tab $newTabId
     listedTabIds=$($automac safari list-tabs | extractWindowAndIndex)
     assertNotContains "New tab should not be among listed tabs after closing"\
@@ -120,6 +123,23 @@ function testWindows {
     assertNotContains "New window should not be among listed windows after closing"\
         "$listedWindowIds"\
         "$newWindowId"
+}
+
+function testGetTabSourceArguments {
+    # Error code 1
+    # Should not support passing no-arguments
+    $automac safari get-tab-source
+    assertEquals 1 $?
+
+    # Should not support passing two or more arguments
+    $automac safari get-tab-source foo bar baz
+    assertEquals 1 $?
+
+    # Error code 2
+    # Should fail with error code 2 if the window/tab combination doesn't
+    # exist
+    $automac safari get-tab-source foo bar
+    assertEquals 2 $?
 }
 
 . $(which shunit2)
